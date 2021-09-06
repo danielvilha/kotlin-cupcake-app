@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.danielvilha.cupcake.databinding.FragmentSummaryBinding
 import com.danielvilha.cupcake.model.OrderViewModel
 
@@ -24,6 +25,7 @@ class SummaryFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentSummaryBinding? = null
 
+    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -39,8 +41,14 @@ class SummaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+            // Specify the fragment as the lifecycle owner
+            lifecycleOwner = viewLifecycleOwner
+
+            // Assign the view model to a property in the binding class
             viewModel = sharedViewModel
-            sendButton.setOnClickListener { sendOrder() }
+
+            // Assign the fragment
+            summaryFragment = this@SummaryFragment
         }
     }
 
@@ -49,6 +57,17 @@ class SummaryFragment : Fragment() {
      */
     fun sendOrder() {
         Toast.makeText(activity, "Send Order", Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Cancel the order and start over.
+     */
+    fun cancelOrder() {
+        // Reset order in view model
+        sharedViewModel.resetOrder()
+
+        // Navigate back to the [StartFragment] to start over
+        findNavController().navigate(R.id.action_summaryFragment_to_startFragment)
     }
 
     /**

@@ -24,6 +24,7 @@ class PickupFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentPickupBinding? = null
 
+    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -39,8 +40,14 @@ class PickupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+            // Specify the fragment as the lifecycle owner
+            lifecycleOwner = viewLifecycleOwner
+
+            // Assign the view model to a property in the binding class
             viewModel = sharedViewModel
-            nextButton.setOnClickListener { goToNextScreen() }
+
+            // Assign the fragment
+            pickupFragment = this@PickupFragment
         }
     }
 
@@ -48,8 +55,18 @@ class PickupFragment : Fragment() {
      * Navigate to the next screen to see the order summary.
      */
     fun goToNextScreen() {
-        Toast.makeText(activity, "Next", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_pickupFragment_to_summaryFragment)
+    }
+
+    /**
+     * Cancel the order and start over.
+     */
+    fun cancelOrder() {
+        // Reset order in view model
+        sharedViewModel.resetOrder()
+
+        // Navigate back to the [StartFragment] to start over
+        findNavController().navigate(R.id.action_pickupFragment_to_startFragment)
     }
 
     /**
