@@ -8,9 +8,6 @@
         <variable
             name="viewModel"
             type="com.danielvilha.cupcake.model.OrderViewModel" />
-        <variable
-            name="flavorFragment"
-            type="com.danielvilha.cupcake.FlavorFragment" />
     </data>
 
     <ScrollView
@@ -89,7 +86,6 @@
                 android:layout_marginTop="@dimen/side_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
-                android:text="@{@string/subtotal_price(viewModel.price)}"
                 tools:text="Subtotal $5.00" />
 
             <Button
@@ -98,7 +94,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_margin"
                 android:text="@string/next"
-                android:onClick="@{() -> flavorFragment.goToNextScreen()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

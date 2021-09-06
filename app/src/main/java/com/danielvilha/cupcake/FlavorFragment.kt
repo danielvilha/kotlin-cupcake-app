@@ -40,8 +40,7 @@ class FlavorFragment : Fragment() {
 
         binding?.apply {
             viewModel = sharedViewModel
-            lifecycleOwner = viewLifecycleOwner
-            flavorFragment = this@FlavorFragment
+            nextButton.setOnClickListener { goToNextScreen() }
         }
     }
 
@@ -49,6 +48,7 @@ class FlavorFragment : Fragment() {
      * Navigate to the next screen to choose pickup date.
      */
     fun goToNextScreen() {
+        Toast.makeText(activity, "Next", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
