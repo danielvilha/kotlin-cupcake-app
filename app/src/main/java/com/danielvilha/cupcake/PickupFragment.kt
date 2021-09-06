@@ -40,7 +40,8 @@ class PickupFragment : Fragment() {
 
         binding?.apply {
             viewModel = sharedViewModel
-            nextButton.setOnClickListener { goToNextScreen() }
+            lifecycleOwner = viewLifecycleOwner
+            pickupFragment = this@PickupFragment
         }
     }
 
@@ -48,7 +49,6 @@ class PickupFragment : Fragment() {
      * Navigate to the next screen to see the order summary.
      */
     fun goToNextScreen() {
-        Toast.makeText(activity, "Next", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_pickupFragment_to_summaryFragment)
     }
 
